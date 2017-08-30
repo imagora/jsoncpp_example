@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.2)
+project(jsoncpp_example)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+include_directories(/usr/local/include)
+link_directories(/usr/local/lib)
+
+link_libraries(jsoncpp)
+
+set(SOURCE_FILES main.cpp)
+add_executable(jsoncpp_example ${SOURCE_FILES})
