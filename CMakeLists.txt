@@ -8,5 +8,5 @@ link_directories(/usr/local/lib)
 
 link_libraries(jsoncpp)
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp value_check.cpp read_write.cpp)
 add_executable(jsoncpp_example ${SOURCE_FILES})
