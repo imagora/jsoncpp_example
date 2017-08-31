@@ -9,9 +9,13 @@
 void HowToConvertStringToJson() {
   std::string json = "{\"name\":\"Tom\",\"age\":29,\"weight\":65.2,\"height\":175,\"children\":[\"Bob\",\"Alice\"]}";
   Json::Value root;
-  Json::Reader reader;
-  if (!reader.parse(json, root) || !root.isObject()) {
-    std::cout << "cannot convert string to json" << std::endl;
+
+  std::stringstream ss{json};
+  Json::CharReaderBuilder builder;
+  std::string errs;
+  bool ret = Json::parseFromStream(builder, ss, &root, &errs);
+  if (!ret || !root.isObject()) {
+    std::cout << "cannot convert string to json, err: " << errs << std::endl;
     return;
   }
 
