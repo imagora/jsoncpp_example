@@ -1,5 +1,6 @@
 #include "value_check.h"
 #include "read_write.h"
+#include "simple_checker.h"
 #include <iostream>
 
 
@@ -24,6 +25,11 @@ int main() {
 
   std::cout << "------ Sample: Check Bool Value       ------\n";
   value_check.CheckBool();
+  std::cout << "\n";
+
+  SimpleChecker simple_checker;
+  std::cout << "------ Sample: Simple Checker         ------\n";
+  simple_checker.CheckValue();
   std::cout << "\n";
   return 0;
 }
