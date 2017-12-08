@@ -61,3 +61,48 @@ void ReadWrite::WriteJson() {
 
   std::cout << "ConvertJsonToString, json: " << ss.str() << std::endl;
 }
+
+
+void ReadWrite::JsonTraversal() {
+  Json::Value root(Json::objectValue);
+  root["name"] = "Tom";
+  root["age"] = 29;
+  root["weight"] = 65.2;
+  root["height"] = 175;
+  Json::Value children(Json::arrayValue);
+
+  Json::Value child_bob(Json::objectValue);
+  child_bob["name"] = "Bob";
+  child_bob["age"] = 3;
+  children.append(child_bob);
+
+  Json::Value child_alice(Json::objectValue);
+  child_alice["name"] = "Alice";
+  child_alice["age"] = 1;
+  children.append(child_alice);
+
+  root["children"] = children;
+  OutputJson(root, "");
+}
+
+
+void ReadWrite::OutputJson(const Json::Value &root, const std::string &pre) {
+  Json::Value::Members members = root.getMemberNames();
+  std::cout << pre << "{\n";
+  for (auto iter = members.begin(); iter != members.end(); ++iter) {
+    uint32_t value_type = root[*iter].type();
+    std::cout << pre << "\t\"" << *iter << "(" << value_type << ")\": ";
+    if (value_type == Json::objectValue) {
+      OutputJson(root[*iter], "\t\t");
+    } else if (value_type == Json::arrayValue) {
+      std::cout << pre << "[\n";
+      for (int i = 0; i < root[*iter].size(); ++i) {
+        OutputJson(root[*iter][i], "\t\t");
+      }
+      std::cout << pre << "\t],\n";
+    } else {
+      std::cout << root[*iter].asString() << ",\n";
+    }
+  }
+  std::cout << pre << "},\n";
+}

@@ -14,6 +14,10 @@ int main() {
   read_write.WriteJson();
   std::cout << "\n";
 
+  std::cout << "------ Sample: Json Traversal         ------\n";
+  read_write.JsonTraversal();
+  std::cout << "\n";
+
   ValueCheck value_check;
   std::cout << "------ Sample: Check UInt Value       ------\n";
   value_check.CheckUInt();
