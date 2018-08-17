@@ -82,11 +82,22 @@ void ReadWrite::JsonTraversal() {
   children.append(child_alice);
 
   root["children"] = children;
+
+  Json::Value children_name(Json::arrayValue);
+  children_name.append("Bob");
+  children_name.append("Alice");
+  root["children_name"] = children_name;
+
   OutputJson(root, "");
 }
 
 
 void ReadWrite::OutputJson(const Json::Value &root, const std::string &pre) {
+  if (!root.isObject()) {
+    std::cout << pre << root.asString() << ",\n";
+    return;
+  }
+
   Json::Value::Members members = root.getMemberNames();
   std::cout << pre << "{\n";
   for (auto iter = members.begin(); iter != members.end(); ++iter) {
