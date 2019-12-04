@@ -1,8 +1,10 @@
 #include "read_write.h"
+
 #include <json/json.h>
 #include <numeric>
 #include <sstream>
 #include <iostream>
+#include <fstream>
 
 
 void ReadWrite::ReadJson() {
@@ -40,6 +42,21 @@ void ReadWrite::ReadJson() {
 }
 
 
+void ReadWrite::ReadJson2() {
+  std::string json = "{\"name\":\"Tom\",\r\n\"age\":29,\r\n\"weight\":65.2,\r\n\"height\":175,\r\n\"children\":[\"Bob\",\r\n\"Alice\"]}";
+  Json::Value root;
+  std::stringstream ss{json};
+  Json::CharReaderBuilder builder;
+  std::string errs;
+  bool ret = Json::parseFromStream(builder, ss, &root, &errs);
+  if (!ret || !root.isObject()) {
+    std::cout << "cannot convert string to json, err: " << errs << std::endl;
+    return;
+  }
+  std::cout << "convert string to json" << std::endl;
+}
+
+
 void ReadWrite::WriteJson() {
   Json::Value root(Json::objectValue);
   root["name"] = "Tom";
@@ -58,6 +75,33 @@ void ReadWrite::WriteJson() {
   std::unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
   std::stringstream ss;
   writer->write(root, &ss);
+
+  std::cout << "ConvertJsonToString, json: " << ss.str() << std::endl;
+}
+
+
+void ReadWrite::WriteJson2() {
+  Json::Value root(Json::objectValue);
+  root["name"] = "Tom";
+  root["age"] = 29;
+  root["weight"] = 65.2;
+  root["height"] = 175;
+  Json::Value children(Json::arrayValue);
+  children.append("Bob");
+  children.append("Alice");
+  root["children"] = children;
+
+  // FastWriter, StyledWriter, StyledStreamWriter, and Writer are deprecated.
+  // Use StreamWriterBuilder, which creates a StreamWriter with a slightly different API
+  Json::StreamWriterBuilder builder;
+  builder.settings_["indentation"] = "\r";
+  std::unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
+  std::stringstream ss;
+  writer->write(root, &ss);
+
+  std::ofstream ofs;
+  ofs.open("/tmp/test.json");
+  writer->write(root, &ofs);
 
   std::cout << "ConvertJsonToString, json: " << ss.str() << std::endl;
 }

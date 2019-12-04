@@ -7,7 +7,11 @@ class ReadWrite {
  public:
     void ReadJson();
 
+    void ReadJson2();
+
     void WriteJson();
+
+    void WriteJson2();
 
     void JsonTraversal();
 
