@@ -31,6 +31,10 @@ int main() {
   value_check.CheckUInt();
   std::cout << "\n";
 
+  std::cout << "------ Sample: Check String UInt Value -----\n";
+  value_check.CheckStringUInt();
+  std::cout << "\n";
+
   std::cout << "------ Sample: Check Real Value       ------\n";
   value_check.CheckReal();
   std::cout << "\n";

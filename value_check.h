@@ -4,6 +4,8 @@ class ValueCheck {
  public:
   void CheckUInt();
 
+  void CheckStringUInt();
+
   void CheckReal();
 
   void CheckBool();
